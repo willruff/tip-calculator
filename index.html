@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id = "daily-income-calculator">
+            <h1>Daily Income Calculator</h1>
+            <input id = "total-tips" placeholder="Total Tips">
+            <input id = "hours-worked" placeholder="Hours Worked">
+            <input id = "hourly-wage" placeholder="Hourly Wage">
+            <button id = "daily-calc" onclick="calculateDaily()">Calculate</button>
+            <h4 id = "error-daily"></h4>
+            <h3 id = "daily-total">Daily Total: </h3>
+            <h3 id = "hourly-income">Hourly Income: </h3>
+        </div>
+        <div id = "yearly-salary-calculator">
+            <h1>Yearly Salary Prediction Calculator</h1>
+            <input id = "hourly-income-sal" placeholder="Hourly Income">
+            <input id = "hours-per-week" placeholder="Hours Per Week (40)">
+            <input id = "weeks-per-year" placeholder="Weeks Per Year (52)">
+            <button id = "salary-calc" onclick="calculateSalary()">Calculate</button>
+            <h4 id = "error-sal"></h4>
+            <h3 id = "yearly-salary">Yearly Salary: </h3>
+        </div>
+        <script>
+            function calculateDaily() {
+                if (document.getElementById("total-tips").value.includes("$") || document.getElementById("hours-worked").value.includes("$") || document.getElementById("hourly-wage").value.includes("$")) {
+                    document.getElementById("error-daily").textContent = "Please don't include a \"$\" in your input. Calculation will be incorrect."
+                    return
+                }
+                const totalTips = parseFloat(document.getElementById("total-tips").value) || 0
+                const hoursWorked = parseFloat(document.getElementById("hours-worked").value) || 0
+                const hourlyWage = parseFloat(document.getElementById("hourly-wage").value) || 0
+                const dailyTotal = ((hourlyWage * hoursWorked) + totalTips).toFixed(2)
+                const hourlyIncome = (dailyTotal / hoursWorked).toFixed(2)
+                document.getElementById("daily-total").textContent = "Daily Total: $" + dailyTotal
+                document.getElementById("hourly-income").textContent = "Hourly Income: $" + hourlyIncome
+                document.getElementById("hourly-income-sal").value = hourlyIncome
+            }
+
+            function calculateSalary() {
+                if (document.getElementById("hourly-income-sal").value.includes("$") || document.getElementById("hours-per-week").value.includes("$") || document.getElementById("weeks-per-year").value.includes("$")) {
+                    document.getElementById("error-sal").textContent = "Please don't include a \"$\" in your input. Calculation will be incorrect."
+                    return
+                }
+                const hourlyIncome = parseFloat(document.getElementById("hourly-income-sal").value) || 0
+                const hoursPerWeek = parseFloat(document.getElementById("hours-per-week").value) || 40
+                const weeksPerYear = parseFloat(document.getElementById("weeks-per-year").value) || 52
+                document.getElementById("yearly-salary").textContent = "Yearly Salary: $" + hourlyIncome * hoursPerWeek * weeksPerYear
+            }
+        </script>
+    </body>
+</html>
